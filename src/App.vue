@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <Model/>
+    <Vis/>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Calc, Model } from './index'
+import { Calc, Model, Vis } from './index'
 
 export default defineComponent({
   data() {
@@ -14,7 +14,8 @@ export default defineComponent({
   },
   components: {
     Calc,
-    Model
+    Model,
+    Vis
   }
 })
 </script>
