@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-    <Calc/>
+    <Model/>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Calc } from './index'
+import { Calc, Model } from './index'
 
 export default defineComponent({
   data() {
 
   },
   components: {
-    Calc
+    Calc,
+    Model
   }
 })
 </script>

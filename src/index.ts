@@ -1,3 +1,4 @@
 export {default as Header} from './Components/Header.vue'
 export {default as Button} from './Components/Button.vue'
 export {default as Calc} from './Components/Calc.vue'
+export {default as Model} from './Components/Model.vue'
