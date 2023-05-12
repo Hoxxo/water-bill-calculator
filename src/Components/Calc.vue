@@ -166,7 +166,7 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(20px); /* Adjusted translation distance */
+    /* Adjusted translation distance */
   -ms-transform: translateX(20px);
   transform: translateX(20px);
 }
