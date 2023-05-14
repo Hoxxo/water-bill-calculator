@@ -10,7 +10,7 @@
 <script lang="ts">
   import { defineComponent } from "vue";
 
-  const send_data = async function() {
+  const send_data = async () => {
     const response = await fetch("http://localhost:5000/predict", {
       method: 'POST',
       headers: {

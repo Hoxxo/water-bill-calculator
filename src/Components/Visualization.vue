@@ -36,6 +36,7 @@ export default defineComponent({
       const data = await response.json();
       chartData.value.labels = data.labels;
       chartData.value.datasets[0].data = data.data;
+      console.log(chartData.value.datasets[0].data);
     });
 
     return {chartData, options};
