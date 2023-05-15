@@ -38,7 +38,7 @@ const create_range = (start: number, end: number): Range => {
   return {
     start,
     end
-  }
+  };
 }
 
 const find_entry = (input: number, map: Map<Range, number>): [number, number] => {
@@ -79,7 +79,7 @@ const calculate = (n: number): number => {
 }
 
 const convert_litre = (n: number) => {
-  return n / 1000;
+  return n * 10 ** -6;
 }
 
 const get_select_value = (selection: string) => {

@@ -1,6 +1,6 @@
 const fetch_data = () =>{
-
-}
+    // TODO!
+};
 
 const generate_numbers = (n: number): number[] => {
     let r: number[] = [];
@@ -18,7 +18,7 @@ let y = generate_numbers(10);
 
 type Coordinate = {x: number, y: number};
 
-const get_data = (x: number[], y: number[]): Coordinate[] => {
+const generate_data = (x: number[], y: number[]): Coordinate[] => {
     if (x.length != y.length) {
         console.log("X and Y doesn't have the same number of elements!");
         return [];
@@ -31,6 +31,8 @@ const get_data = (x: number[], y: number[]): Coordinate[] => {
     });
 
     return r;
-}
+};
 
-console.log(get_data(x, y));
+let data = generate_data(x, y);
+
+export default data;
