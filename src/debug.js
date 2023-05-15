@@ -37,3 +37,5 @@ const calculate = (n) => {
 
 console.log(calculate(24));
 console.log(Math.floor(4329.60 / 10) * 10);
+
+calculate(convert_millilitre(700));
