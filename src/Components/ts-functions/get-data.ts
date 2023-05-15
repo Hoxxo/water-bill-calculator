@@ -19,6 +19,11 @@ let y = generate_numbers(10);
 type Coordinate = {x: number, y: number};
 
 const get_data = (x: number[], y: number[]): Coordinate[] => {
+    if (x.length != y.length) {
+        console.log("X and Y doesn't have the same number of elements!");
+        return [];
+    }
+
     let r: Coordinate[] = [];
 
     x.map((i, index) => {
