@@ -5,7 +5,7 @@
 <script>
 import {Scatter} from 'vue-chartjs'
 import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, PointElement, Title, Tooltip} from 'chart.js'
-import data from './ts-functions/get-data'
+import data from './ts-functions/get-data.ts'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement)
 

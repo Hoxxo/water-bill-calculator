@@ -16,6 +16,6 @@ export default defineComponent({
     Calc,
     Model,
     Vis
-  }
+  },
 })
 </script>
