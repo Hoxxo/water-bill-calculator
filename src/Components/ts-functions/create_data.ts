@@ -1,3 +1,4 @@
+import './read_data.ts';
 const fetch_data = () =>{
     // TODO!
 };
