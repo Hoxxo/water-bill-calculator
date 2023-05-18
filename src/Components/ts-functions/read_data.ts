@@ -13,7 +13,7 @@ let sheet: XLSX.WorkSheet | null = null;
 })();
 
 if (book) {
-    let sheet = book.Sheets[book.SheetNames[0]];
+    sheet = book.Sheets[book.SheetNames[0]];
 } else {
     console.error('Failed to load the workbook');
 }
