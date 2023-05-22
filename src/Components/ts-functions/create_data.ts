@@ -1,39 +1,23 @@
-import './read_data.ts';
-const fetch_data = () =>{
-    // TODO!
-};
-
-const generate_numbers = (n: number): number[] => {
-    let r: number[] = [];
-
-    for (let i = 0; i < n; i++) {
-        let num = Math.random() * 100
-        r.push(Math.floor(num));
-    }
-
-    return r;
-};
-
-let x = generate_numbers(10);
-let y = generate_numbers(10);
+import { load_data_frame, path } from './read_data';
 
 type Coordinate = {x: number, y: number};
 
-const generate_data = (x: number[], y: number[]): Coordinate[] => {
-    if (x.length != y.length) {
-        console.log("X and Y doesn't have the same number of elements!");
-        return [];
+let data: Coordinate[] = [];
+
+const generate_data = (y: number[]): Coordinate[] => {
+    let data: Coordinate[] = [];
+
+    for (let i = 0; i < y.length; i++) {
+        data.push({x: i + 1, y: y[i]});
     }
 
-    let r: Coordinate[] = [];
+    return data
+}
 
-    x.map((i, index) => {
-        r.push({x: i, y: y[index]})
-    });
+load_data_frame(path).then((values) => {
+    if (values) {
+        data = generate_data(values);
+    }
 
-    return r;
-};
-
-let data = generate_data(x, y);
-
-export default data;
+    console.log(data);
+});

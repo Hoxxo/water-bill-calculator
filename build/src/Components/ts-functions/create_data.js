@@ -1,28 +1,18 @@
-import './read_data.ts';
-const fetch_data = () => {
-    // TODO!
-};
-const generate_numbers = (n) => {
-    let r = [];
-    for (let i = 0; i < n; i++) {
-        let num = Math.random() * 100;
-        r.push(Math.floor(num));
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const read_data_1 = require("./read_data");
+let data = [];
+const generate_data = (y) => {
+    let data = [];
+    for (let i = 0; i < y.length; i++) {
+        data.push({ x: i + 1, y: y[i] });
     }
-    return r;
+    return data;
 };
-let x = generate_numbers(10);
-let y = generate_numbers(10);
-const generate_data = (x, y) => {
-    if (x.length != y.length) {
-        console.log("X and Y doesn't have the same number of elements!");
-        return [];
+(0, read_data_1.load_data_frame)(read_data_1.path).then((values) => {
+    if (values) {
+        data = generate_data(values);
     }
-    let r = [];
-    x.map((i, index) => {
-        r.push({ x: i, y: y[index] });
-    });
-    return r;
-};
-let data = generate_data(x, y);
-export default data;
+    console.log(data);
+});
 //# sourceMappingURL=create_data.js.map

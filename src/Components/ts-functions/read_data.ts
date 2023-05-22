@@ -1,24 +1,23 @@
 import * as XLSX from 'xlsx';
+import * as dfd from 'danfojs-node';
+import * as fs from 'fs';
 
-let sheet: XLSX.WorkSheet | null = null;
+const current_day: string = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    [new Date().getDay()].slice(0, 3);
 
-let path: string = '/Users/hiroshi/PyCharmProjects/sandbox/py-data.xlsx'
+export const path: string = '/Users/hiroshi/PyCharmProjects/sandbox/py-data.xlsx'
 
-const open_sheet = (path: string): XLSX.WorkBook | null => {
+export const load_data_frame = async (path: string): Promise<number[] | null> => {
     try {
-        return XLSX.readFile(path);
+        let buf = await fs.promises.readFile(path);
+        let bstr = new Uint8Array(buf).reduce((s, b) => s + String.fromCharCode(b), '');
+        let wb = XLSX.read(bstr, { type: 'binary' });
+        let wsjson = XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+        let df = new dfd.DataFrame(wsjson);
+
+        return df[current_day]['$dataIncolumnFormat'].slice(0, -1);
     } catch (error) {
         console.error("Error reading file!", error);
         return null;
     }
 }
-
-const book = open_sheet(path);
-
-if (book) {
-    sheet = book.Sheets[book.SheetNames[0]];
-} else {
-    console.error('Failed to load the workbook');
-}
-
-console.log(sheet);
