@@ -18,8 +18,6 @@ now = datetime.now()
 hour = str(now.hour) + ':00:00'
 day = now.strftime('%A')[:3]
 
-numbers = []
-
 # Time column index
 df.at['Total', 'Tue'] = df['Tue'][:-1].sum()
 print(df.at['Total', 'Tue'])
