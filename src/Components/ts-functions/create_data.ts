@@ -11,13 +11,27 @@ const generate_data = (y: number[]): Coordinate[] => {
         data.push({x: i + 1, y: y[i]});
     }
 
-    return data
+    return data;
 }
 
 load_data_frame(path).then((values) => {
     if (values) {
         data = generate_data(values);
+    } else {
+        return null;
     }
 
-    console.log(data);
+    let send = JSON.stringify(data);
+
+    fetch('http://localhost:5200/data', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: send
+    }).then((response) => {
+        response.json().then((data) => {
+            console.log(data);
+        });
+    });
 });

@@ -2,10 +2,9 @@
     <Scatter :data="chartData" :options="chartOptions"/>
 </template>
 
-<script>
+<script lang="ts">
 import {Scatter} from 'vue-chartjs'
 import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, PointElement, Title, Tooltip} from 'chart.js'
-import data from './ts-functions/create_data.ts'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement)
 
@@ -19,7 +18,7 @@ export default {
                     {
                         label: 'Data One',
                         backgroundColor: '#f87979',
-                        data: data
+                        data: []
                     }
                 ]
             },
@@ -27,6 +26,21 @@ export default {
                 responsive: true,
             }
         }
-    }
+    },
+
+    mounted() {
+        fetch('http://localhost:5200/data', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }).then(response => response.json())
+          .then(data => {
+            this.chartData.datasets[0].data = data
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+    },
 }
 </script>
