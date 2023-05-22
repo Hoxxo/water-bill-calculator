@@ -12,7 +12,7 @@ const generate_data = (y: number[]): Coordinate[] => {
     }
 
     return data;
-}
+};
 
 load_data_frame(path).then((values) => {
     if (values) {
