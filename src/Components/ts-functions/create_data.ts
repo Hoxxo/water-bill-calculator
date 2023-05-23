@@ -1,10 +1,10 @@
 import { load_data_frame, path } from './read_data';
 
-type Coordinate = {x: number, y: number};
+export type Coordinate = {x: number, y: number};
 
 let data: Coordinate[] = [];
 
-const generate_data = (y: number[]): Coordinate[] => {
+export const generate_data = (y: number[]): Coordinate[] => {
     let data: Coordinate[] = [];
 
     for (let i = 0; i < y.length; i++) {

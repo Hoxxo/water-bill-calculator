@@ -12,4 +12,4 @@ app.post('/data', (req, res) => {
     res.json({ message: 'Data received!' });
 });
 
-app.listen(5200, () => console.log('Server started on port 5000'));
+app.listen(5200, () => console.log('Server started on port 5200'));
