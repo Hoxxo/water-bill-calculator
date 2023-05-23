@@ -1,42 +1,23 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import { load_data_frame, path } from './read_data';
-import { generate_data, Coordinate } from './create_data';
+import { generate_data } from './create_data';
 
 const app = express();
 
-app.use(cors()); // This is crucial for allowing cross-origin requests
-app.use(express.json()); // This is needed to parse JSON request bodies
+app.use(cors());
+app.use(express.json());
 
-let data: Coordinate[] = [];
-
-load_data_frame(path).then((values) => {
-    if (values) {
-        data = generate_data(values);
+app.get('/data', async (req: Request, res: Response) => {
+    const yValues = await load_data_frame(path);
+    console.log('yValues: ', yValues)
+    if (yValues) {
+        const data = generate_data(yValues);
+        res.json(data);
+        console.log('Data generated: ', data);
     } else {
-        return null;
+        res.status(500).send('Error generating data');
     }
-
-    let send = JSON.stringify(data);
-
-    fetch('http://localhost:5200/data', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: send
-    }).then((response) => {
-        response.json().then((data) => {
-            console.log(data);
-        });
-    });
-});
-
-app.post('/data', (req, res) => {
-    const data = req.body;
-    console.log(data);
-
-    res.json({ message: 'Data received!' });
 });
 
 app.listen(5200, () => console.log('Server started on port 5200'));

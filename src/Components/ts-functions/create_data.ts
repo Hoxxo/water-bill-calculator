@@ -13,25 +13,3 @@ export const generate_data = (y: number[]): Coordinate[] => {
 
     return data;
 };
-
-load_data_frame(path).then((values) => {
-    if (values) {
-        data = generate_data(values);
-    } else {
-        return null;
-    }
-
-    let send = JSON.stringify(data);
-
-    fetch('http://localhost:5200/data', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: send
-    }).then((response) => {
-        response.json().then((data) => {
-            console.log(data);
-        });
-    });
-});

@@ -30,7 +30,7 @@ export default {
 
     mounted() {
         fetch('http://localhost:5200/data', {
-          method: 'GET',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
