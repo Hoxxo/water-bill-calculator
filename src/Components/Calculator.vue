@@ -1,9 +1,12 @@
 <template>
   {{response}}
+  {{yValue}}
+  {{result}}
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import calculate from './ts-functions/calculator'
 
 interface DataPoints {
   x: number,
@@ -28,13 +31,11 @@ class APIOperations implements APIResponse {
   }
 
   sum_Y_values(): number {
-    return this.datasets.reduce((sum, dataset) => {
-      return sum + dataset.data.reduce((innerSum, point) => innerSum + point.y, 0);
-    }, 0)
+    return this.datasets[0].data.reduce((a, b) => a + b.y, 0)
   }
 }
 
-const fetch_data = async (): Promise<APIResponse | null> => {
+const fetch_data = async (): Promise<APIOperations | null> => {
   try {
     const response = await fetch('http://localhost:5200/data', {
       method: 'GET',
@@ -43,18 +44,27 @@ const fetch_data = async (): Promise<APIResponse | null> => {
       }
     })
 
-    return <APIResponse>await response.json()
+    const data = await response.json()
+    return new APIOperations(data.datasets)
   } catch (err) {
     console.error(err)
     return null
   }
 }
 
-const response = ref<APIResponse | null>(null)
+const response = ref<APIOperations | null>(null)
+const yValue = ref<number | null>(0)
+const result = ref<number | null>(0)
+
+const convert_millilitre_to_cubic_metre = (value: number): number => {
+  return value / 1000000
+}
 
 const fetchData = async () => {
   response.value = await fetch_data()
-  console.log(response.value)
+  yValue.value = response.value?.sum_Y_values() || null
+  yValue.value = convert_millilitre_to_cubic_metre(yValue.value || 0)
+  result.value = calculate(yValue.value || 0)
 }
 
 fetchData() // call the method when the component is created
