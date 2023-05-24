@@ -8,12 +8,27 @@ import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, PointE
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement)
 
+interface chartPoint {
+  x: number,
+  y: number
+}
+
+interface chartDataset {
+  label: string,
+  data: chartPoint[],
+  backgroundColor: string,
+}
+
+interface ChartData {
+  datasets: chartDataset[]
+}
+
 export default {
   name: 'Scatter Chart',
   components: {Scatter},
   data() {
     return {
-      chartData: null as any,
+      chartData: null as ChartData | null,
       chartOptions: {
         responsive: true,
       }
