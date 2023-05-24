@@ -1,5 +1,5 @@
 <template>
-    <Scatter :data="chartData" :options="chartOptions"/>
+  <Scatter v-if="chartData" :data="chartData" :options="chartOptions"/>
 </template>
 
 <script lang="ts">
@@ -9,38 +9,28 @@ import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, PointE
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement)
 
 export default {
-    name: 'Scatter Chart',
-    components: {Scatter},
-    data() {
-        return {
-            chartData: {
-                datasets: [
-                    {
-                        label: 'Data One',
-                        backgroundColor: '#f87979',
-                        data: []
-                    }
-                ]
-            },
-            chartOptions: {
-                responsive: true,
-            }
-        }
-    },
+  name: 'Scatter Chart',
+  components: {Scatter},
+  data() {
+    return {
+      chartData: null as any,
+      chartOptions: {
+        responsive: true,
+      }
+    }
+  },
 
-    mounted() {
-        fetch('http://localhost:5200/data', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }).then(response => response.json())
-          .then(data => {
-            this.chartData.datasets[0].data = data
-          })
-          .catch((error) => {
-            console.error('Error:', error);
-          });
-    },
+  async mounted() {
+    await fetch('http://localhost:5200/data', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(async (res) => {
+      //console.log(await res.json());
+      this.chartData = await res.json();
+      console.log(this.chartData); // For debugging
+    });
+  }
 }
 </script>

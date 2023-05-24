@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const read_data_1 = require("./read_data");
-let data = [];
+exports.generate_data = void 0;
 const generate_data = (y) => {
     let data = [];
     for (let i = 0; i < y.length; i++) {
@@ -9,10 +8,5 @@ const generate_data = (y) => {
     }
     return data;
 };
-(0, read_data_1.load_data_frame)(read_data_1.path).then((values) => {
-    if (values) {
-        data = generate_data(values);
-    }
-    console.log(data);
-});
+exports.generate_data = generate_data;
 //# sourceMappingURL=create_data.js.map
