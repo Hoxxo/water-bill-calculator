@@ -1,7 +1,8 @@
 <template>
-  {{response}}
-  {{yValue}}
-  {{result}}
+  <div>
+    <p>合計使用水道量: {{total}}</p>
+    <p>料金: {{result}}円</p>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -55,6 +56,7 @@ const fetch_data = async (): Promise<APIOperations | null> => {
 const response = ref<APIOperations | null>(null)
 const yValue = ref<number | null>(0)
 const result = ref<number | null>(0)
+const total = ref<number | null>(0)
 
 const convert_millilitre_to_cubic_metre = (value: number): number => {
   return value / 1000000
@@ -62,8 +64,8 @@ const convert_millilitre_to_cubic_metre = (value: number): number => {
 
 const fetchData = async () => {
   response.value = await fetch_data()
-  yValue.value = response.value?.sum_Y_values() || null
-  yValue.value = convert_millilitre_to_cubic_metre(yValue.value || 0)
+  total.value = response.value?.sum_Y_values() || null
+  yValue.value = convert_millilitre_to_cubic_metre(total.value || 0)
   result.value = calculate(yValue.value || 0)
 }
 

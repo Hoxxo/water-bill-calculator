@@ -56,5 +56,3 @@ const calculate = (n: number): number => {
 }
 
 export default calculate
-
-console.log(calculate(24))
