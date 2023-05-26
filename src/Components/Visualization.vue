@@ -2,9 +2,10 @@
   <Scatter v-if="chartData" :data="chartData" :options="chartOptions"/>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import {Scatter} from 'vue-chartjs'
 import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, PointElement, Title, Tooltip} from 'chart.js'
+import { ref, onMounted } from 'vue';
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement)
 
@@ -23,29 +24,20 @@ interface ChartData {
   datasets: chartDataset[]
 }
 
-export default {
-  name: 'Scatter Chart',
-  components: {Scatter},
-  data() {
-    return {
-      chartData: null as ChartData | null,
-      chartOptions: {
-        responsive: true,
-      }
-    }
-  },
+const chartData = ref<ChartData | null>(null);
+const chartOptions = ref({
+  responsive: true,
+});
 
-  async mounted() {
-    await fetch('http://localhost:5200/data', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(async (res) => {
-      //console.log(await res.json());
-      this.chartData = await res.json();
-      console.log(this.chartData); // For debugging
-    });
-  }
-}
+onMounted(async () => {
+  await fetch('http://localhost:5200/data', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  }).then(async (res) => {
+    chartData.value = await res.json();
+    console.log(chartData.value); // For debugging
+  });
+});
 </script>
