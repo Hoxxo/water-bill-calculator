@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>合計使用水道量: {{total}}</p>
+    <p>合計使用水道量: {{total}}mL</p>
     <p>料金: {{result}}円</p>
   </div>
 </template>

@@ -8,7 +8,17 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-const make_data = (data: Coordinate[]) => {
+interface DataSet {
+  label: string
+  backgroundColor: string
+  data: Coordinate[]
+}
+
+interface DataWrapper {
+  datasets: DataSet[]
+}
+
+const make_data = (data: Coordinate[]): DataWrapper => {
   return {
     datasets: [
       {
@@ -19,6 +29,7 @@ const make_data = (data: Coordinate[]) => {
     ]
   }
 }
+
 
 app.get('/data', async (req: Request, res: Response) => {
   const yValues = await load_data_frame(path)

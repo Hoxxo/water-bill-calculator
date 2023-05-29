@@ -1,10 +1,11 @@
-# import serial
+#import serial
 import pandas as pd
 from datetime import datetime
 
 path = R'./py-data.xlsx'
 
-# ser = serial.Serial('path-to-serial', 9600)
+#ser = serial.Serial('COM3', 9600)
+
 
 class DataFrameInitializer:
     def __init__(self, path):
@@ -23,7 +24,7 @@ class DataFrameInitializer:
 
     @property
     def hour(self):
-        return str(self.now.hour) + ':00:00'
+        return str(self.now.hour) + ':00:00' if self.now.hour > 9 else '0' + str(self.now.hour) + ':00:00'
 
     @property
     def day(self):
@@ -46,8 +47,8 @@ class DataFrameInitializer:
         if hour is None:
             hour = self.hour
 
-        print(hour) # For debugging
-        print(day) # For debugging
+        print(hour)  # For debugging
+        print(day)  # For debugging
         print(self.df.at[hour, day])
 
         return self
@@ -56,7 +57,8 @@ class DataFrameInitializer:
         if day is None:
             day = self.day
 
-        print(day) # For debugging
+        print(day)  # For debugging
+        self.df.at['Total', day] = 0  # Clear first so that the total is not added to itself
         self.df.at['Total', day] = self.df[day][:-1].sum()
 
         return self
@@ -67,14 +69,14 @@ class DataFrameInitializer:
         if hour is None:
             hour = self.hour
 
-        print(hour) # For debugging
-        print(day) # For debugging
+        print(hour)  # For debugging
+        print(day)  # For debugging
         self.df.at[hour, day] = value
 
         return self
 
     def update_time(self):
-        print(self.now) # For debugging
+        print(self.now)  # For debugging
         self.now = datetime.now()
 
         return self
@@ -84,13 +86,12 @@ class DataFrameInitializer:
 
         return self
 
+
 df = DataFrameInitializer(path)
+
 
 def convert_litre_to_millilitre(value: float) -> float:
     return value * 1000
 
-tmp = 0
-df.update_totals()\
-    .print_dataframe()\
-    .push_to_excel()
 
+df.print_at().print_dataframe()
