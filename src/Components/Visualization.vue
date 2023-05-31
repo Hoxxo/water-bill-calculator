@@ -1,7 +1,3 @@
-<template>
-  <Scatter v-if="chartData" :data="chartData" :options="chartOptions"/>
-</template>
-
 <script setup lang="ts">
 import {Scatter} from 'vue-chartjs'
 import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, PointElement, Title, Tooltip} from 'chart.js'
@@ -41,3 +37,7 @@ onMounted(async () => {
   });
 });
 </script>
+
+<template>
+  <Scatter v-if="chartData" :data="chartData" :options="chartOptions"/>
+</template>

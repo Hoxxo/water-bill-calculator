@@ -4,7 +4,7 @@ import * as fs from 'fs'
 
 const current_day: string = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   [new Date().getDay()].slice(0, 3)
-export const path: string = 'C:\\Users\\Chain\\PycharmProjects\\sandbox\\py-data.xlsx'
+export const path: string = '/Users/hiroshi/PyCharmProjects/sandbox/py-data.xlsx'
 
 export const load_data_frame = async (path: string): Promise<number[] | null> => {
   try {

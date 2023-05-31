@@ -30,7 +30,6 @@ const make_data = (data: Coordinate[]): DataWrapper => {
   }
 }
 
-
 app.get('/data', async (req: Request, res: Response) => {
   const yValues = await load_data_frame(path)
   console.log('yValues: ', yValues)

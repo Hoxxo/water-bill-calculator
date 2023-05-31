@@ -5,7 +5,7 @@ export const generate_data = (y: number[] | string): Coordinate[] => {
 
   for (let i = 0; i < y.length; i++) {
     if (y[i] === '') {
-      continue;
+      continue
     }
 
     data.push({ x: i + 1, y: y[i] as number })
