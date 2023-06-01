@@ -1,10 +1,10 @@
-#import serial
+import serial
 import pandas as pd
 from datetime import datetime
 
 path = R'./py-data.xlsx'
 
-#ser = serial.Serial('COM3', 9600)
+ser = serial.Serial('COM3', 9600)
 
 
 class DataFrameInitializer:
@@ -94,4 +94,18 @@ def convert_litre_to_millilitre(value: float) -> float:
     return value * 1000
 
 
-df.print_at().print_dataframe()
+tmp = 0
+
+
+while True:
+    data = ser.readline().decode('utf-8').strip()
+    print(data)
+    if data != tmp:
+        tmp = data
+        print("New entry:", data, "Litres")
+        print(convert_litre_to_millilitre(float(data)), "milliLitres")
+        df.update_time() \
+            .change_at(convert_litre_to_millilitre(float(data))) \
+            .calc_total_at() \
+            .print_dataframe()\
+            .push_to_excel()
