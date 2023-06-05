@@ -8,7 +8,7 @@ export const generate_data = (y: number[] | string): Coordinate[] => {
       continue
     }
 
-    data.push({ x: i + 1, y: y[i] as number })
+    data.push({ x: i, y: y[i] as number })
   }
 
   return data
