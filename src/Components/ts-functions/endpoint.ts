@@ -30,10 +30,10 @@ const make_data = (data: Coordinate[]): DataWrapper => {
   }
 }
 
-app.get('/data', async (req: Request, res: Response) => {
+app.get('/data', async (req: Request, res: Response): Promise<void> => {
   const yValues = await load_data_frame(path)
   console.log('yValues: ', yValues)
-  if (yValues != null) {
+  if (yValues !== null) {
     const data = generate_data(yValues)
     res.json(make_data(data))
     console.log('Data generated: ', data)
