@@ -95,19 +95,26 @@ def convert_litre_to_millilitre(value: float) -> float:
 
 
 tmp = 0
-current_time = 0
+
+current_time = df.hour
+counter = 0
 
 
 while True:
     if current_time != df.hour:
+        print('Time has changed')
+        print('current_time: ' + current_time)
+        print('df hour: ' + df.hour)
+
         current_time = df.hour
         data = 0
 
     data = ser.readline().decode('utf-8').strip()
+
     print(data)
     if data != tmp:
         tmp = data
-        print("New entry:", data, "Litres")
+        print("New entry:", data, "Litres, ", "at", df.hour, "on", df.day)
         print(convert_litre_to_millilitre(float(data)), "milliLitres")
         df.update_time() \
             .change_at(convert_litre_to_millilitre(float(data))) \
@@ -115,4 +122,4 @@ while True:
             .print_dataframe() \
             .push_to_excel()
 
-# The amount of water that was poured in the last hour carries over to the next hour.
+# The amount of water that gets poured in the last hour carries over to the next hour. -> Fixed
