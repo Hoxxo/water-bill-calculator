@@ -119,7 +119,6 @@ while True:
         df.update_time() \
             .change_at(convert_litre_to_millilitre(float(data))) \
             .calc_total_at() \
-            .print_dataframe() \
             .push_to_excel()
 
 # The amount of water that gets poured in the last hour carries over to the next hour. -> Fixed
