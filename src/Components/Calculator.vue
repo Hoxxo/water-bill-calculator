@@ -8,27 +8,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import calculate from './ts-functions/calculator'
-
-interface DataPoints {
-  x: number,
-  y: number,
-}
-
-interface ChartDataSet {
-  label: string,
-  data: DataPoints[],
-  backgroundColor: string,
-}
-
-interface APIResponse {
-  datasets: ChartDataSet[]
-}
+import { type DataWrapper as APIResponse, type DataSet as ChartDataSet } from "./ts-functions/types";
 
 class APIOperations implements APIResponse {
-  datasets: ChartDataSet[];
+  datasets: ChartDataSet[]
 
   constructor(datasets: ChartDataSet[]) {
-    this.datasets = datasets;
+    this.datasets = datasets
   }
 
   sum_Y_values(): number {

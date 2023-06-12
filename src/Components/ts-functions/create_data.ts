@@ -1,4 +1,4 @@
-export interface Coordinate {x: number, y: number}
+import { type Coordinate } from './types'
 
 export const generate_data = (y: number[] | string): Coordinate[] => {
   const data: Coordinate[] = []

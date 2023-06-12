@@ -1,22 +1,13 @@
 import express, { type Request, type Response } from 'express'
 import cors from 'cors'
 import { load_data_frame, path } from './read_data'
-import { type Coordinate, generate_data } from './create_data'
+import { generate_data } from './create_data'
+import { type Coordinate, type DataWrapper } from './types'
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
-
-interface DataSet {
-  label: string
-  backgroundColor: string
-  data: Coordinate[]
-}
-
-interface DataWrapper {
-  datasets: DataSet[]
-}
 
 const make_data = (data: Coordinate[]): DataWrapper => {
   return {
