@@ -3,6 +3,7 @@ import cors from 'cors'
 import { load_data_frame, path } from './read_data'
 import { generate_data } from './create_data'
 import { type Coordinate, type DataWrapper } from './types'
+import catppuccin from "./themes";
 
 const app = express()
 
@@ -14,7 +15,7 @@ const make_data = (data: Coordinate[]): DataWrapper => {
     datasets: [
       {
         label: 'Data 1',
-        backgroundColor: '#f87979',
+        backgroundColor: catppuccin.dark.purple,
         data
       }
     ]

@@ -3,6 +3,7 @@ import { Line } from 'vue-chartjs'
 import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, PointElement, Title, Tooltip, LineController, LineElement } from 'chart.js'
 import { ref, onMounted } from 'vue';
 import { Coordinate, DataSet, DataWrapper } from './ts-functions/types';
+import catppuccin from "./ts-functions/themes";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineController, LineElement)
 
@@ -25,7 +26,7 @@ const transform_data = (data: DataWrapper): LineWrapper => {
     datasets: data.datasets.map(dataset => ({
       ...dataset,
       data: dataset.data.map((coordinate: Coordinate) => coordinate.y),
-      borderColor: dataset.backgroundColor,
+      borderColor: catppuccin.dark.purple,
       tension: 0.1,
       fill: false
     }))
