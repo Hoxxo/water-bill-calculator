@@ -25,17 +25,17 @@ void setup() {
 }
 
 void loop() {
-  if(WiFi.status() == WL_CONNECTED){   //Check the current connection status
+  if (WiFi.status() == WL_CONNECTED) {   //Check the current connection status
     http.begin("http://localhost:5000/data"); //Specify the URL
     http.addHeader("Content-Type", "application/x-www-form-urlencoded");  //Specify content-type header
 
     int httpResponseCode = http.POST(String(signal));   //Send the actual POST request
 
-    if(httpResponseCode>0){
+    if (httpResponseCode > 0) {
       String response = http.getString(); //Get the response to the request
       Serial.println(httpResponseCode);   //Print return code
       Serial.println(response);           //Print request answer
-    }else{
+    } else {
       Serial.print("Error on sending POST: ");
       Serial.println(httpResponseCode);
     }

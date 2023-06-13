@@ -1,29 +1,38 @@
 <script setup lang="ts">
-import {Scatter} from 'vue-chartjs'
+import {Chart, Scatter} from 'vue-chartjs'
 import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, PointElement, Title, Tooltip} from 'chart.js'
-import { ref, onMounted } from 'vue';
+import {onMounted, ref} from 'vue';
+import { type DataSet, type DataWrapper as ChartData } from "./ts-functions/types";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement)
 
-interface chartPoint {
-  x: number,
-  y: number
-}
-
-interface chartDataset {
-  label: string,
-  data: chartPoint[],
-  backgroundColor: string,
-}
-
-interface ChartData {
-  datasets: chartDataset[]
-}
-
-const chartData = ref<ChartData | null>(null);
+const chartData = ref<LineWrapper | null>(null);
 const chartOptions = ref({
+  type: 'line',
   responsive: true,
 });
+
+interface LineData extends Omit<DataSet, 'data'> {
+  data: number[]
+}
+
+interface LineWrapper extends Omit<ChartData, 'datasets'> {
+  datasets: LineData[]
+}
+
+const transform_data = (data: ChartData): LineWrapper => {
+  const datasets: LineData[] = data.datasets.map((dataset: DataSet) => {
+    const data: number[] = dataset.data.map((point) => point.y);
+    return {
+      ...dataset,
+      data
+    }
+  });
+  return {
+    ...data,
+    datasets
+  }
+}
 
 onMounted(async () => {
   await fetch('http://localhost:5200/data', {
@@ -32,7 +41,7 @@ onMounted(async () => {
       'Content-Type': 'application/json'
     }
   }).then(async (res) => {
-    chartData.value = await res.json();
+    chartData.value = transform_data(await res.json());
     console.log(chartData.value); // For debugging
   });
 });
