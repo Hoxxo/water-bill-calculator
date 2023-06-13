@@ -1,38 +1,42 @@
 <script setup lang="ts">
-import {Chart, Scatter} from 'vue-chartjs'
-import {BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, PointElement, Title, Tooltip} from 'chart.js'
-import {onMounted, ref} from 'vue';
-import { type DataSet, type DataWrapper as ChartData } from "./ts-functions/types";
+import { Line } from 'vue-chartjs'
+import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, PointElement, Title, Tooltip, LineController, LineElement } from 'chart.js'
+import { ref, onMounted } from 'vue';
+import { Coordinate, DataSet, DataWrapper } from './ts-functions/types';
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement)
-
-const chartData = ref<LineWrapper | null>(null);
-const chartOptions = ref({
-  type: 'line',
-  responsive: true,
-});
+ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineController, LineElement)
 
 interface LineData extends Omit<DataSet, 'data'> {
   data: number[]
+  borderColor: string
+  tension: number
+  fill: boolean
 }
 
-interface LineWrapper extends Omit<ChartData, 'datasets'> {
+interface LineWrapper extends Omit<DataWrapper, 'datasets'> {
   datasets: LineData[]
+  labels: string[]
 }
 
-const transform_data = (data: ChartData): LineWrapper => {
-  const datasets: LineData[] = data.datasets.map((dataset: DataSet) => {
-    const data: number[] = dataset.data.map((point) => point.y);
-    return {
-      ...dataset,
-      data
-    }
-  });
+const transform_data = (data: DataWrapper): LineWrapper => {
+  const labels = Array.from({ length: 24 }, (_, i) => i.toString());
   return {
-    ...data,
-    datasets
+    labels: labels,
+    datasets: data.datasets.map(dataset => ({
+      ...dataset,
+      data: dataset.data.map((coordinate: Coordinate) => coordinate.y),
+      borderColor: dataset.backgroundColor,
+      tension: 0.1,
+      fill: false
+    }))
   }
 }
+
+
+const chartData = ref<LineWrapper | null>(null);
+const chartOptions = ref({
+  responsive: true,
+})
 
 onMounted(async () => {
   await fetch('http://localhost:5200/data', {
@@ -41,12 +45,13 @@ onMounted(async () => {
       'Content-Type': 'application/json'
     }
   }).then(async (res) => {
-    chartData.value = transform_data(await res.json());
+    const data = await res.json();
+    chartData.value = transform_data(data);
     console.log(chartData.value); // For debugging
-  });
-});
+  })
+})
 </script>
 
 <template>
-  <Scatter v-if="chartData" :data="chartData" :options="chartOptions"/>
+  <Line v-if="chartData" :data="chartData" :options="chartOptions"/>
 </template>
