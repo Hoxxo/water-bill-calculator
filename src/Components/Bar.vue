@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Line } from 'vue-chartjs'
+import { Bar } from 'vue-chartjs'
 import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, PointElement, Title, Tooltip, LineController, LineElement } from 'chart.js'
 import { ref, onMounted } from 'vue';
 import { Coordinate, DataSet, DataWrapper } from './ts-functions/types';
@@ -7,19 +7,19 @@ import catppuccin from "./ts-functions/themes";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineController, LineElement)
 
-interface LineData extends Omit<DataSet, 'data'> {
+interface BarData extends Omit<DataSet, 'data'> {
   data: number[]
   borderColor: string
   tension: number
   fill: boolean
 }
 
-interface LineWrapper extends Omit<DataWrapper, 'datasets'> {
-  datasets: LineData[]
+interface BarWrapper extends Omit<DataWrapper, 'datasets'> {
+  datasets: BarData[]
   labels: string[]
 }
 
-const transform_data = (data: DataWrapper): LineWrapper => {
+const transform_data = (data: DataWrapper): BarWrapper => {
   const labels = Array.from({ length: 24 }, (_, i) => i.toString());
   return {
     labels: labels,
@@ -34,7 +34,7 @@ const transform_data = (data: DataWrapper): LineWrapper => {
 }
 
 
-const chartData = ref<LineWrapper | null>(null)
+const chartData = ref<BarWrapper | null>(null)
 const chartOptions = ref({
   responsive: true,
 })
@@ -56,5 +56,5 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Line v-if="chartData" :data="chartData" :options="chartOptions"/>
+  <Bar v-if="chartData" :data="chartData" :options="chartOptions"/>
 </template>

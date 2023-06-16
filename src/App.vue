@@ -1,20 +1,20 @@
 <template>
   <div id="app">
-    <Vis/>
+    <Bar/>
     <Calculator/>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { Vis, Calculator } from './index'
+import { Vis, Calculator, Bar } from './index'
 
 export default defineComponent({
   data() {
 
   },
   components: {
-    Vis,
+    Bar,
     Calculator
   },
 })
