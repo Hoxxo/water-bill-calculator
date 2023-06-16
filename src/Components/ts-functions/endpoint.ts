@@ -15,7 +15,7 @@ const make_data = (data: Coordinate[]): DataWrapper => {
     datasets: [
       {
         label: 'Data 1',
-        backgroundColor: catppuccin.dark.purple,
+        backgroundColor: catppuccin.dark.pink,
         data
       }
     ]

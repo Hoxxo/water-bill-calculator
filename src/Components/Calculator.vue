@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import calculate from './ts-functions/calculator'
-import { type DataWrapper as APIResponse, type DataSet as ChartDataSet } from "./ts-functions/types";
+import { type DataWrapper as APIResponse, type DataSet as ChartDataSet, DataWrapper } from "./ts-functions/types";
 
 class APIOperations implements APIResponse {
   datasets: ChartDataSet[]
@@ -31,7 +31,7 @@ const fetch_data = async (): Promise<APIOperations | null> => {
       }
     })
 
-    const data = await response.json()
+    const data: DataWrapper = await response.json()
     return new APIOperations(data.datasets)
   } catch (err) {
     console.error(err)

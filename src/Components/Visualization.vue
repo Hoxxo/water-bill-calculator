@@ -34,7 +34,7 @@ const transform_data = (data: DataWrapper): LineWrapper => {
 }
 
 
-const chartData = ref<LineWrapper | null>(null);
+const chartData = ref<LineWrapper | null>(null)
 const chartOptions = ref({
   responsive: true,
 })
@@ -46,9 +46,11 @@ onMounted(async () => {
       'Content-Type': 'application/json'
     }
   }).then(async (res) => {
-    const data = await res.json();
-    chartData.value = transform_data(data);
-    console.log(chartData.value); // For debugging
+    const data: DataWrapper = await res.json()
+    chartData.value = transform_data(data)
+    console.log(chartData.value) // For debugging
+  }).catch(error => {
+    console.error("Error in Visualization.vue: ", error)
   })
 })
 </script>
