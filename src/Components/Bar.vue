@@ -51,13 +51,17 @@ let delayed = false;
 
 const chartOptions = ref({
   responsive: true,
-  animation: {
-    duration: 1000,
-    easing: 'linear',
-  },
   animations: {
-    x: {
-      delay: 500
+    y: {
+      easing: 'easeOutQuad',
+      from: (ctx) => {
+        if (ctx.type === 'data') {
+          if (ctx.mode === 'default' && !ctx.dropped) {
+            ctx.dropped = true;
+            return 0;
+          }
+        }
+      }
     }
   },
   scales: {
