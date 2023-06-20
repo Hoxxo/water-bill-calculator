@@ -1,8 +1,19 @@
 <script setup lang="ts">
 import { Bar } from 'vue-chartjs'
-import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, PointElement, Title, Tooltip, LineController, LineElement } from 'chart.js'
-import { ref, onMounted } from 'vue';
-import { Coordinate, DataSet, DataWrapper } from './ts-functions/types';
+import {
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  LineController,
+  LineElement,
+  PointElement,
+  Title,
+  Tooltip,
+} from 'chart.js'
+import {onMounted, ref} from 'vue';
+import {type Coordinate, type DataSet, type DataWrapper} from './ts-functions/types';
 import catppuccin from "./ts-functions/themes";
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineController, LineElement)
@@ -35,27 +46,52 @@ const transform_data = (data: DataWrapper): BarWrapper => {
   }
 }
 
-
 const chartData = ref<BarWrapper | null>(null)
+let delayed = false;
+
 const chartOptions = ref({
   responsive: true,
+  animation: {
+    duration: 1000,
+    easing: 'linear',
+  },
+  animations: {
+    x: {
+      delay: 500
+    }
+  },
   scales: {
     y: {
       ticks: {
         callback: (value: number): string => {
           return value.toString() + 'mL'
-        }
+        },
+        color: '#c6d0f5'
       }
     },
     x: {
       ticks: {
         callback: (value: number): string => {
           return value.toString() + '時'
-        }
+        },
+        color: '#c6d0f5'
       }
     }
-  }
+  },
+  plugins: {
+    legend: {
+      labels: {
+        color: '#c6d0f5'
+      }
+    },
+    // title: {
+    //   display: true,
+    //   text: '使用水道量',
+    //   color: '#c6d0f5'
+    // }
+  },
 })
+
 
 onMounted(async () => {
   await fetch('http://localhost:5200/data', {
@@ -74,5 +110,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Bar v-if="chartData" :data="chartData" :options="chartOptions"/>
+  <div class="p-8 flex justify-center items-center">
+    <Bar v-if="chartData" :data="chartData" :options="chartOptions"/>
+  </div>
 </template>

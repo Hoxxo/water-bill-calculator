@@ -12,11 +12,12 @@ app.use(express.json())
 
 const current_day: string = new Date().toLocaleString('ja-jp', { weekday: 'long' })
 
-const make_data = (data: Coordinate[]): DataWrapper => {
+const make_data = (data: Coordinate[]): object => {
   return {
     datasets: [
       {
         label: current_day,
+        labelColor: '#c6d0f5',
         backgroundColor: catppuccin.dark.pink,
         data
       }

@@ -1,12 +1,13 @@
 <template>
-  <div>
+  <link href="https://fonts.googleapis.com/css?family=Zen+Maru+Gothic" rel="stylesheet" />
+  <div class="font-zen text-cpt-text text-xl p-4">
     <p>合計使用水道量: {{total}}mL</p>
     <p>料金: {{result}}円</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import calculate from './ts-functions/calculator'
 import { type DataWrapper as APIResponse, type DataSet as ChartDataSet, DataWrapper } from "./ts-functions/types";
 
@@ -33,8 +34,8 @@ const fetch_data = async (): Promise<APIOperations | null> => {
 
     const data: DataWrapper = await response.json()
     return new APIOperations(data.datasets)
-  } catch (err) {
-    console.error(err)
+  } catch (err: Error) {
+    console.error(`It broke here ${err.stack}`)
     return null
   }
 }
@@ -55,7 +56,9 @@ const fetchData = async () => {
   result.value = calculate(yValue.value || 0)
 }
 
-fetchData() // call the method when the component is created
+onMounted(async () => {
+  await fetchData()
+})
 </script>
 
 <style scoped>
