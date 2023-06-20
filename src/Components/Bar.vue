@@ -10,7 +10,8 @@ ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale,
 interface BarData extends Omit<DataSet, 'data'> {
   data: number[]
   borderColor: string
-  tension: number
+  borderWidth: number
+  borderRadius: number
   fill: boolean
 }
 
@@ -27,7 +28,8 @@ const transform_data = (data: DataWrapper): BarWrapper => {
       ...dataset,
       data: dataset.data.map((coordinate: Coordinate) => coordinate.y),
       borderColor: catppuccin.dark.purple,
-      tension: 0.1,
+      borderWidth: 2,
+      borderRadius: 5,
       fill: false
     }))
   }
