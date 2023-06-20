@@ -1,8 +1,8 @@
 <template>
   <link href="https://fonts.googleapis.com/css?family=Zen+Maru+Gothic" rel="stylesheet" />
-  <div class="font-zen text-cpt-text text-xl p-4">
-    <p>合計使用水道量: {{total}}mL</p>
-    <p>料金: {{result}}円</p>
+  <div class="font-zen text-cpt-text text-2xl p-4">
+    <p> 合計使用水道量: <span class="text-pink">{{total}}mL</span> </p>
+    <p>料金: <span class="text-pink">{{result}}円</span></p>
   </div>
 </template>
 

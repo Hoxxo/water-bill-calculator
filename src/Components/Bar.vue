@@ -53,7 +53,7 @@ const chartOptions = ref({
   responsive: true,
   animations: {
     y: {
-      easing: 'easeOutQuad',
+      easing: 'easeOutBack',
       from: (ctx) => {
         if (ctx.type === 'data') {
           if (ctx.mode === 'default' && !ctx.dropped) {
