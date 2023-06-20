@@ -10,11 +10,13 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+const current_day: string = new Date().toLocaleString('ja-jp', { weekday: 'long' })
+
 const make_data = (data: Coordinate[]): DataWrapper => {
   return {
     datasets: [
       {
-        label: 'Data 1',
+        label: current_day,
         backgroundColor: catppuccin.dark.pink,
         data
       }

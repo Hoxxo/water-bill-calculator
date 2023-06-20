@@ -37,6 +37,22 @@ const transform_data = (data: DataWrapper): BarWrapper => {
 const chartData = ref<BarWrapper | null>(null)
 const chartOptions = ref({
   responsive: true,
+  scales: {
+    y: {
+      ticks: {
+        callback: (value: number): string => {
+          return value.toString() + 'mL'
+        }
+      }
+    },
+    x: {
+      ticks: {
+        callback: (value: number): string => {
+          return value.toString() + '時'
+        }
+      }
+    }
+  }
 })
 
 onMounted(async () => {
@@ -50,7 +66,7 @@ onMounted(async () => {
     chartData.value = transform_data(data)
     console.log(chartData.value) // For debugging
   }).catch(error => {
-    console.error("Error in Visualization.vue: ", error)
+    console.error(`Error in Visualization.vue: ${error}`)
   })
 })
 </script>
