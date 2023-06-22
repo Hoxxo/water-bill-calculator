@@ -12,9 +12,9 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
-import {onMounted, ref} from 'vue';
-import {type Coordinate, type DataSet, type DataWrapper} from './ts-functions/types';
-import catppuccin from "./ts-functions/themes";
+import { onMounted, ref } from 'vue';
+import { type Coordinate, type DataSet, type DataWrapper } from './ts-functions/types'
+import catppuccin from './ts-functions/themes'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineController, LineElement)
 
@@ -46,19 +46,24 @@ const transform_data = (data: DataWrapper): BarWrapper => {
   }
 }
 
-const chartData = ref<BarWrapper | null>(null)
-let delayed = false;
+interface AnimationContext {
+  type: string
+  mode: string
+  dropped: boolean
+}
 
-const chartOptions = ref({
+const chartData = ref<BarWrapper | null>(null)
+
+const chartOptions: object = ref({
   responsive: true,
   animations: {
     y: {
       easing: 'easeOutBack',
-      from: (ctx) => {
+      from: (ctx: AnimationContext) => {
         if (ctx.type === 'data') {
           if (ctx.mode === 'default' && !ctx.dropped) {
-            ctx.dropped = true;
-            return 0;
+            ctx.dropped = true
+            return 0
           }
         }
       }
@@ -95,7 +100,6 @@ const chartOptions = ref({
     // }
   },
 })
-
 
 onMounted(async () => {
   await fetch('http://localhost:5200/data', {
