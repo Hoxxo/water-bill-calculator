@@ -54,12 +54,42 @@ interface AnimationContext {
 
 const chartData = ref<BarWrapper | null>(null)
 
-const chartOptions: object = ref({
+interface ChartOptions {
+  responsive: boolean;
+  animations: {
+    y: {
+      from: (ctx: AnimationContext) => number
+      easing: string
+    }
+  };
+  scales: {
+    x: {
+      ticks: {
+        color: string
+        callback: (value: number) => string
+      }
+    }
+    y: {
+      ticks: {
+        color: string;
+        callback: (value: number) => string }
+    }
+  }
+  plugins: {
+    legend: {
+      labels: {
+        color: string
+      }
+    }
+  }
+}
+
+const chartOptions = ref<ChartOptions>({
   responsive: true,
   animations: {
     y: {
       easing: 'easeOutBack',
-      from: (ctx: AnimationContext) => {
+      from: (ctx: AnimationContext): number => {
         if (ctx.type === 'data') {
           if (ctx.mode === 'default' && !ctx.dropped) {
             ctx.dropped = true

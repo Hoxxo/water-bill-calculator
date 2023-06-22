@@ -1,6 +1,6 @@
 <template>
   <link href="https://fonts.googleapis.com/css?family=Zen+Maru+Gothic" rel="stylesheet" />
-  <div class="font-zen text-cpt-text text-2xl p-4 min-h-fit">
+  <div class="font-zen text-cpt-text text-2xl p-4 min-h-fit inline-block border-2 rounded-xl latte border-lavender">
     <p> 合計使用水道量: <span class="text-pink">{{total}}mL</span> </p>
     <p>料金: <span class="text-pink">{{result}}円</span></p>
   </div>
@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import calculate from './ts-functions/calculator'
-import { type DataWrapper as APIResponse, type DataSet as ChartDataSet, DataWrapper } from "./ts-functions/types";
+import { type DataWrapper as APIResponse, type DataSet as ChartDataSet, type DataWrapper } from "./ts-functions/types";
 
 class APIOperations implements APIResponse {
   datasets: ChartDataSet[]
