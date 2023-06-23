@@ -34,8 +34,10 @@ const fetch_data = async (): Promise<APIOperations | null> => {
 
     const data: DataWrapper = await response.json()
     return new APIOperations(data.datasets)
-  } catch (err: Error) {
-    console.error(`It broke here ${err.stack}`)
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error(`It broke here ${err.stack}`)
+    }
     return null
   }
 }

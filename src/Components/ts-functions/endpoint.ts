@@ -12,7 +12,7 @@ app.use(express.json())
 
 const current_day: string = new Date().toLocaleString('ja-jp', { weekday: 'long' })
 
-const make_data = (data: Coordinate[]): object => {
+const make_data = (data: Coordinate[]): DataWrapper => {
   return {
     datasets: [
       {
@@ -25,7 +25,7 @@ const make_data = (data: Coordinate[]): object => {
   }
 }
 
-app.get('/data', async (req: Request, res: Response): Promise<void> => {
+app.get('/data', async (req: Request, res: Response<DataWrapper | string>): Promise<void> => {
   const yValues = await load_data_frame(path)
   console.log('yValues: ', yValues)
   if (yValues !== null) {

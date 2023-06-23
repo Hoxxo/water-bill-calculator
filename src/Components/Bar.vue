@@ -16,7 +16,9 @@ import { onMounted, ref } from 'vue';
 import { type Coordinate, type DataSet, type DataWrapper } from './ts-functions/types'
 import catppuccin from './ts-functions/themes'
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineController, LineElement)
+ChartJS.register(
+    Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineController, LineElement
+)
 
 interface BarData extends Omit<DataSet, 'data'> {
   data: number[]
@@ -96,6 +98,7 @@ const chartOptions = ref<ChartOptions>({
             return 0
           }
         }
+        return 0
       }
     }
   },
@@ -137,7 +140,7 @@ onMounted(async () => {
     headers: {
       'Content-Type': 'application/json'
     }
-  }).then(async (res) => {
+  }).then(async res => {
     const data: DataWrapper = await res.json()
     chartData.value = transform_data(data)
     console.log(chartData.value) // For debugging

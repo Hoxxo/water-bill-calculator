@@ -5,6 +5,7 @@ export interface Coordinate {
 
 export interface DataSet {
   label: string
+  labelColor: string
   backgroundColor: string
   data: Coordinate[]
 }
