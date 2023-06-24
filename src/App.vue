@@ -5,17 +5,11 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { Vis, Calculator, Bar } from './index'
+<script setup lang="ts">
+import { provide } from 'vue'
+import { Calculator, Bar } from './index'
+import useStore from './Components/store'; // import your store
 
-export default defineComponent({
-  data() {
-
-  },
-  components: {
-    Bar,
-    Calculator
-  },
-})
+const store = useStore()
+provide('store', store) // provide the store here
 </script>

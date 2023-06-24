@@ -8,11 +8,11 @@ const print = (...args: any[]) => {
   console.log(...args)
 }
 
-type WeekData = {
+export type WeekData = {
   [key in DayOfWeek]: number
 }
 
-const fetch_week = async (path: string): Promise<WeekData> => {
+export const fetch_week = async (path: string): Promise<WeekData> => {
   try {
     const df = await extract_data_frame(path)
     let index = 0
@@ -29,7 +29,7 @@ const fetch_week = async (path: string): Promise<WeekData> => {
             .reduce((total, num) => total + num, 0)
 
         return acc
-      }, {} as WeekData)
+      }, <WeekData>{})
 
     print(weekData);
     return weekData;
@@ -38,5 +38,3 @@ const fetch_week = async (path: string): Promise<WeekData> => {
     throw new Error();
   }
 }
-
-fetch_week(path)
