@@ -19,7 +19,12 @@ class APIOperations implements APIResponse {
   }
 
   sum_Y_values(): number {
-    return this.datasets[0].data.reduce((a, b) => a + b.y, 0)
+    let total_sum = 0;
+    this.datasets.forEach(dataset => {
+      total_sum += dataset.data.reduce((acc, curr) => acc + curr.y, 0)
+    })
+
+    return total_sum
   }
 }
 

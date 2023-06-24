@@ -26,13 +26,14 @@ const make_data = (data: Coordinate[]): DataWrapper => {
 }
 
 app.get('/data', async (req: Request, res: Response<DataWrapper | string>): Promise<void> => {
-  const yValues = await load_data_frame(path)
-  console.log('yValues: ', yValues)
-  if (yValues !== null) {
+  try {
+    const yValues = await load_data_frame(path)
+    console.log('yValues: ', yValues)
     const data = generate_data(yValues)
     res.json(make_data(data))
     console.log('Data generated: ', data)
-  } else {
+  } catch (error) {
+    console.error(error)
     res.status(500).send('Error generating data')
   }
 })

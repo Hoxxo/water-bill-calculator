@@ -134,7 +134,7 @@ const chartOptions = ref<ChartOptions>({
   },
 })
 
-onMounted(async () => {
+async function day_data() {
   await fetch('http://localhost:5200/data', {
     method: 'GET',
     headers: {
@@ -147,6 +147,10 @@ onMounted(async () => {
   }).catch(error => {
     console.error(`Error in Visualization.vue: ${error}`)
   })
+}
+
+onMounted(async () => {
+  await day_data();
 })
 </script>
 
