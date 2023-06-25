@@ -1,7 +1,7 @@
 <template>
   <link href="https://fonts.googleapis.com/css?family=Zen+Maru+Gothic" rel="stylesheet" />
   <div class="font-zen text-cpt-text px-auto text-2xl p-4 min-h-fit inline-block border-2 rounded-xl latte border-lavender">
-    <p> 合計使用水道量: <span class="text-pink">{{total}}mL</span> </p>
+    <p> 合計使用水道量: <span class="text-pink">{{total}}mL</span></p>
     <p>料金: <span class="text-pink">{{result}}円</span></p>
   </div>
 </template>
@@ -16,11 +16,12 @@ import {
   BarWrapper
 } from "./ts-functions/types";
 import { DataType } from "./ts-functions/types"
-import { watch, inject } from 'vue'
+import { watch } from 'vue'
 import { useStore } from 'vuex'
 import { computed } from 'vue';
+import { type Store } from './store'
 
-let store = useStore()
+let store = useStore<Store>()
 let isWeekData = computed(() => store.state.isWeekData);
 
 class APIOperations implements APIResponse {
@@ -41,7 +42,7 @@ class APIOperations implements APIResponse {
 }
 
 
-watch(isWeekData, async (newVal, oldVal) => {
+watch(isWeekData, async (newVal, _) => {
   console.log(newVal)
   await fetchData();
 })
@@ -77,8 +78,6 @@ const fetch_data = async (): Promise<APIOperations | BarWrapper | null> => {
   }
 }
 
-
-const response = ref<APIOperations | null>(null)
 const yValue = ref<number | null>(0)
 const result = ref<number | null>(0)
 const total = ref<number | null>(0)
@@ -109,7 +108,6 @@ const fetchData = async () => {
     result.value = null;
   }
 }
-
 
 onMounted(async () => {
   await fetchData()

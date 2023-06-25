@@ -2,12 +2,10 @@ import express, { type Request, type Response } from 'express'
 import cors from 'cors'
 import { load_data_frame, path } from './read_data'
 import { generate_data } from './create_data'
-import { type Coordinate, type DataWrapper } from './types'
+import { type Coordinate, type DataWrapper, type DataRequest, type DataType, type BarWrapper } from './types'
 import catppuccin from './themes'
-import { fetch_week } from "./get_week"
-import { type DataRequest, type DataType } from './types'
+import { fetch_week } from './get_week'
 import { type WeekData } from './get_week'
-import { BarWrapper } from './types'
 
 const app = express()
 
@@ -33,13 +31,13 @@ const transform_week_data = (data: WeekData): BarWrapper => {
   const labels = Object.keys(data)
   const values = Object.values(data)
   const initialData = {
-    label: "使用水道量",
+    label: '使用水道量',
     labelColor: '#c6d0f5',
-    backgroundColor: catppuccin.dark.pink,
+    backgroundColor: catppuccin.dark.pink
   }
 
   return {
-    labels: labels,
+    labels,
     datasets: [
       {
         ...initialData,
@@ -54,8 +52,8 @@ const transform_week_data = (data: WeekData): BarWrapper => {
 }
 
 app.post('/data', async (
-  req: Request<unknown, unknown,
-  DataRequest>, res: Response<DataWrapper | string | BarWrapper>
+  req: Request<unknown, unknown, DataRequest>,
+  res: Response<DataWrapper | string | BarWrapper>
 ): Promise<void> => {
   try {
     const dataType: DataType = req.body.dataType
@@ -63,23 +61,22 @@ app.post('/data', async (
 
     switch (dataType) {
       case 'day':
-        yValues = await load_data_frame(path);
-        const data = generate_data(yValues);
-        res.json(make_data(data));
-        break;
+        yValues = await load_data_frame(path)
+        const data = generate_data(yValues)
+        res.json(make_data(data))
+        break
       case 'week':
-        const weekData: WeekData = await fetch_week(path);
-        console.log("WeekData: ", transform_week_data(weekData))
+        const weekData: WeekData = await fetch_week(path)
+        console.log('WeekData: ', transform_week_data(weekData))
         res.json(transform_week_data(weekData))
-        break;
+        break
       default:
-        res.status(400).send('Invalid data type');
-        return;
+        res.status(400).send('Invalid data type')
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Error generating data');
+    console.error(error)
+    res.status(500).send('Error generating data')
   }
-});
+})
 
 app.listen(5200, () => { console.log('Server started on port 5200') })

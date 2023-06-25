@@ -15,6 +15,7 @@ import {
 import {inject, onMounted, ref} from 'vue';
 import {BarWrapper, type Coordinate, DataType, type DataWrapper} from './ts-functions/types'
 import catppuccin from './ts-functions/themes'
+import { type Store } from "./Store";
 
 ChartJS.register(
     Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineController, LineElement
@@ -190,18 +191,21 @@ const week_data = async () => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify( <DataType>{
+      body: JSON.stringify(<DataType>{
         dataType: DataType.WEEK
       })
     })
     chartData.value = await res.json()
+    if (chartData.value) {
+      (chartData.value as BarWrapper).labels = ['月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日', '日曜日']
+    }
     chartOptions.value = chartOptionsWeek.value
   } catch (error) {
     console.error(`Error in Visualization.vue: ${error}`)
   }
 }
 
-const store = inject('store')
+const store: Store = inject('store') as Store
 
 const toggleData = async () => {
   store.toggleData()
@@ -213,7 +217,7 @@ const toggleData = async () => {
 }
 
 onMounted(async () => {
-  await day_data();
+  await day_data()
 })
 </script>
 

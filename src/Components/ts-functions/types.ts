@@ -19,7 +19,7 @@ export enum DataType {
   WEEK = 'week'
 }
 
-export type DataRequest = {
+export interface DataRequest {
   dataType: DataType
 }
 
