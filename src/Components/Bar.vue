@@ -48,7 +48,7 @@ interface ChartOptions {
   responsive?: boolean;
   animations?: {
     y?: {
-      from?: (ctx: AnimationContext) => number
+      from?: <T>(ctx: AnimationContext) => T
       easing?: string
     }
   }
