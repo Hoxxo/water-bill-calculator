@@ -164,13 +164,13 @@ const chartOptionsWeek = ref<ChartOptions>({
 
 const chartOptions = ref<ChartOptions>()
 
-async function day_data() {
+const day_data = async () => {
   await fetch('http://localhost:5200/data', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify( <DataType>{
+    body: JSON.stringify(<DataType>{
       dataType: DataType.DAY
     })
   }).then(async res => {
@@ -181,7 +181,7 @@ async function day_data() {
   }).catch(error => {
     console.error(`Error in Visualization.vue: ${error}`)
   })
-}
+};
 
 const week_data = async () => {
   console.log('week data requested')
@@ -205,7 +205,7 @@ const week_data = async () => {
   }
 }
 
-const store: Store = inject('store') as Store
+const store: Store = <Store>inject('store')
 
 const toggleData = async () => {
   store.toggleData()

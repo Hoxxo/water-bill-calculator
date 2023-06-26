@@ -47,9 +47,7 @@ watch(isWeekData, async (newVal, _) => {
   await fetchData();
 })
 
-function isBarWrapper(data: APIOperations | BarWrapper): data is BarWrapper {
-  return 'labels' in data;
-}
+const isBarWrapper = (data: APIOperations | BarWrapper): data is BarWrapper => 'labels' in data;
 
 const fetch_data = async (): Promise<APIOperations | BarWrapper | null> => {
   try {
@@ -61,18 +59,18 @@ const fetch_data = async (): Promise<APIOperations | BarWrapper | null> => {
       body: JSON.stringify(<DataType>{
         dataType: store.state.isWeekData ? DataType.WEEK : DataType.DAY,
       }),
-    });
+    })
 
     const data: DataWrapper | BarWrapper = await response.json();
     if (store.state.isWeekData && 'labels' in data) {
       // TypeScript now knows data is BarWrapper
       return data;
     } else {
-      return new APIOperations((data as DataWrapper).datasets);
+      return new APIOperations((data as DataWrapper).datasets)
     }
   } catch (err: unknown) {
     if (err instanceof Error) {
-      console.error(`It broke here ${err.stack}`);
+      console.error(`It broke here ${err.stack}`)
     }
     return null;
   }
