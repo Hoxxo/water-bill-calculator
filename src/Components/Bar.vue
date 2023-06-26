@@ -15,7 +15,7 @@ import {
 import {inject, onMounted, ref} from 'vue';
 import {BarWrapper, type Coordinate, DataType, type DataWrapper} from './ts-functions/types'
 import catppuccin from './ts-functions/themes'
-import { type Store } from "./Store";
+import { type Store } from "./Store"
 
 ChartJS.register(
     Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, PointElement, LineController, LineElement
@@ -222,7 +222,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="font-zen text-cpt-text border-2 inline-block rounded-xl align-top text-2xl p-3 mx-5 latte border-lavender hover:border-teal hover:bg-teal transition ease-in-out delay-150">
+  <div class="font-zen text-cpt-text border-2 inline-block rounded-xl align-top text-2xl p-3 mx-5 latte border-lavender hover:border-teal hover:bg-teal transition ease-in-out delay-75">
     <button class="transform active:scale-90" @click="toggleData">データ切換</button>
   </div>
   <div class="p-8 flex justify-center items-center">
