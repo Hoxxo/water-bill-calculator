@@ -41,6 +41,7 @@ void loop() {
     String payload = Serial.readStringUntil('\n');
 
     if (WiFi.status() == WL_CONNECTED) {
+    HTTPClient http;
 
       String postData = "message=" + payload;
 
