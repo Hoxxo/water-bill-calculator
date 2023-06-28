@@ -56,13 +56,14 @@ interface ChartOptions {
     x?: {
       ticks?: {
         color?: string
-        callback?: (value: number) => string
+        callback?: <T>(value: number) => T
       }
     }
     y?: {
       ticks?: {
         color?: string;
-        callback?: (value: number) => string }
+        callback?: <T>(value: number) => T
+      }
     }
   }
   plugins?: {
@@ -179,7 +180,7 @@ const day_data = async () => {
     chartData.value = transform_data(data)
     chartOptions.value = chartOptionsDay.value
   }).catch(error => {
-    console.error(`Error in Visualization.vue: ${error}`)
+    console.error(`Error in day data: ${error}`)
   })
 };
 
@@ -201,7 +202,7 @@ const week_data = async () => {
     }
     chartOptions.value = chartOptionsWeek.value
   } catch (error) {
-    console.error(`Error in Visualization.vue: ${error}`)
+    console.error(`Error in week data: ${error}`)
   }
 }
 
