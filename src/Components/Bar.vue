@@ -56,13 +56,14 @@ interface ChartOptions {
     x?: {
       ticks?: {
         color?: string
-        callback?: (value: number) => string
+        callback?: <T>(value: number) => T
       }
     }
     y?: {
       ticks?: {
         color?: string;
-        callback?: (value: number) => string }
+        callback?: <T>(value: number) => T
+      }
     }
   }
   plugins?: {
