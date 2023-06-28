@@ -171,7 +171,7 @@ async function day_data() {
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify( <DataType>{
+    body: JSON.stringify(<DataType>{
       dataType: DataType.DAY
     })
   }).then(async res => {
@@ -180,7 +180,7 @@ async function day_data() {
     chartData.value = transform_data(data)
     chartOptions.value = chartOptionsDay.value
   }).catch(error => {
-    console.error(`Error in Visualization.vue: ${error}`)
+    console.error(`Error in day data: ${error}`)
   })
 }
 
@@ -202,7 +202,7 @@ const week_data = async () => {
     }
     chartOptions.value = chartOptionsWeek.value
   } catch (error) {
-    console.error(`Error in Visualization.vue: ${error}`)
+    console.error(`Error in week data: ${error}`)
   }
 }
 

@@ -3,10 +3,13 @@ interface Scope {
   end: number
 }
 
-const create_Scope = (start: number, end: number): Scope => {
-  return {
-    start,
-    end
+class BillScope implements Scope {
+  start: number
+  end: number
+
+  constructor(start: number, end: number) {
+    this.start = start
+    this.end = end
   }
 }
 
@@ -28,12 +31,12 @@ const calculate = (n: number): number => {
   }
   const map = new Map<Scope, number>()
   let total = 0
-  map.set(create_Scope(1, 10), 62.70)
-  map.set(create_Scope(11, 20), 165.00)
-  map.set(create_Scope(21, 40), 268.40)
-  map.set(create_Scope(41, 100), 358.50)
-  map.set(create_Scope(101, 500), 444.40)
-  map.set(create_Scope(501, Number.MAX_SAFE_INTEGER), 485.10)
+  map.set(new BillScope(1, 10), 62.70)
+  map.set(new BillScope(11, 20), 165.00)
+  map.set(new BillScope(21, 40), 268.40)
+  map.set(new BillScope(41, 100), 358.50)
+  map.set(new BillScope(101, 500), 444.40)
+  map.set(new BillScope(501, Number.MAX_SAFE_INTEGER), 485.10)
 
   const index = find_entry(n, map)
 

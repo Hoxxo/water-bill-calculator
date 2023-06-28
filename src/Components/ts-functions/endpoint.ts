@@ -57,7 +57,7 @@ app.post('/data', async (
 ): Promise<void> => {
   try {
     const dataType: DataType = req.body.dataType
-    let yValues
+    let yValues: number[] = []
 
     switch (dataType) {
       case 'day':
