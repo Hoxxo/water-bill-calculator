@@ -81,7 +81,7 @@ const result = ref<number | null>(0)
 const total = ref<number | null>(0)
 
 const convert_millilitre_to_cubic_metre = (value: number): number => {
-  return value / 1000000
+  return value / 1_000_000
 }
 
 // Modify fetchData function
