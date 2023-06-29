@@ -4,8 +4,6 @@ import * as fs from 'fs'
 import * as os from 'os'
 import { type DataFrame } from 'danfojs-node'
 
-export const current_day: string = new Date().toLocaleString('en-gb', { weekday: 'short' })
-
 // Mac: /Users/hiroshi/PyCharmProjects/sandbox/py-data.xlsx
 // Windows: C:\Users\hiroshi\PycharmProjects\sandbox\py-data.xlsx
 
@@ -24,6 +22,7 @@ export async function extract_data_frame (path: string): Promise<DataFrame> {
 export const load_data_frame = async (path: string): Promise<number[]> => {
   try {
     const df = await extract_data_frame(path)
+    const current_day: string = new Date().toLocaleString('en-gb', { weekday: 'short' })
 
     console.log(df[current_day].$dataIncolumnFormat.slice(0, -1))
     return df[current_day].$dataIncolumnFormat.slice(0, -1)

@@ -176,7 +176,7 @@ const day_data = async () => {
     })
   }).then(async res => {
     const data: DataWrapper = await res.json()
-    console.log(data);
+    // console.log(data)
     chartData.value = transform_data(data)
     chartOptions.value = chartOptionsDay.value
   }).catch(error => {
@@ -185,9 +185,9 @@ const day_data = async () => {
 };
 
 const week_data = async () => {
-  console.log('week data requested')
+  // console.log('week data requested')
   try {
-    const res = await fetch('http://localhost:5300/data', {
+    const res = await fetch('http://localhost:5200/data', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

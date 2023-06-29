@@ -28,7 +28,11 @@ const find_entry = (input: number): [number, number] | null => {
   return null
 }
 
-const calculate = (n: number): number => {
+const calculate = (n: number | null): number => {
+  if (n === null) {
+    throw new Error('Number used to calculate value is null!')
+  }
+
   if (n < 1) {
     return n * 62.70
   }

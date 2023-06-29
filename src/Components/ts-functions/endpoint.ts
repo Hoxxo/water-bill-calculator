@@ -67,7 +67,7 @@ app.post('/data', async (
         break
       case 'week':
         const weekData: WeekData = await fetch_week(path)
-        console.log('WeekData: ', transform_week_data(weekData))
+        // console.log('WeekData: ', transform_week_data(weekData))
         res.json(transform_week_data(weekData))
         break
       default:

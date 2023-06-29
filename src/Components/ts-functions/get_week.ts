@@ -4,9 +4,9 @@ import { extract_data_frame } from './read_data'
 type DayOfWeek = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun'
 const dayOfWeek: DayOfWeek[] = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
-const print = (...args: any[]) => {
-  console.log(...args)
-}
+// const print = (...args: any[]) => {
+//   console.log(...args)
+// }
 
 export type WeekData = {
   [key in DayOfWeek]: number
@@ -42,14 +42,14 @@ export const fetch_week = async (path: string): Promise<WeekData> => {
         // Check if the array is the correct type
         const set = day.slice(0, -1)
         if (!is_number_array(set)) {
-          print(day)
+          // print(day)
           return acc
         }
 
         acc[dayOfWeek[index++]] =
           set.reduce((total, num) => total + num, 0)
 
-        print(set)
+        // print(set)
         return acc
       }, <WeekData>{})
   } catch (error) {

@@ -16,13 +16,10 @@ import {
   BarWrapper
 } from "./ts-functions/types";
 import { DataType } from "./ts-functions/types"
-import { watch } from 'vue'
-import { useStore } from 'vuex'
-import { computed } from 'vue';
+import { watch, inject } from 'vue'
 import { type Store } from './store'
 
-let store = useStore<Store>()
-let isWeekData = computed(() => store.state.isWeekData);
+const store: Store = <Store>inject('store')
 
 class APIOperations implements APIResponse {
   datasets: ChartDataSet[]
@@ -41,17 +38,11 @@ class APIOperations implements APIResponse {
   }
 }
 
-
-watch(isWeekData, async (newVal, _) => {
-  console.log(newVal)
-  await fetchData();
-})
-
 const isBarWrapper = (data: APIOperations | BarWrapper): data is BarWrapper => 'labels' in data;
 
 const fetch_data = async (): Promise<APIOperations | BarWrapper | null> => {
   try {
-    const response = await fetch('http://localhost:5300/data', {
+    const response = await fetch('http://localhost:5200/data', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -64,15 +55,15 @@ const fetch_data = async (): Promise<APIOperations | BarWrapper | null> => {
     const data: DataWrapper | BarWrapper = await response.json();
     if (store.state.isWeekData && 'labels' in data) {
       // TypeScript now knows data is BarWrapper
-      return data;
+      return data
     } else {
       return new APIOperations((data as DataWrapper).datasets)
     }
   } catch (err: unknown) {
     if (err instanceof Error) {
-      console.error(`It broke here ${err.stack}`)
+      console.error(`Error fetching data in Calculator ${err}`)
     }
-    return null;
+    return null
   }
 }
 
@@ -80,26 +71,36 @@ const yValue = ref<number | null>(0)
 const result = ref<number | null>(0)
 const total = ref<number | null>(0)
 
-const convert_millilitre_to_cubic_metre = (value: number): number => {
+const convert_millilitre_to_cubic_metre = (value: number | null): number => {
+  if (value === null) {
+    throw new Error("Passed value into calculator is null")
+  }
+
   return value / 1_000_000
 }
 
 // Modify fetchData function
 const fetchData = async () => {
   const response = await fetch_data();
-  console.log(response);
+  // console.log(response)
   if (response) {
     if (isBarWrapper(response)) {
       // TypeScript now knows `response` is `BarWrapper` here
-      console.log(response.datasets)
+      // console.log(response.datasets)
       total.value = response.datasets.reduce((sum, dataset) => sum + dataset.data.reduce((acc, value) => acc + value, 0), 0);
     } else {
       // TypeScript now knows `response` is `APIOperations` here
       total.value = response.sum_Y_values();
     }
 
-    yValue.value = convert_millilitre_to_cubic_metre(total.value || 0);
-    result.value = calculate(yValue.value || 0);
+    try {
+      yValue.value = convert_millilitre_to_cubic_metre(total.value)
+      result.value = calculate(yValue.value)
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(`Error occurred in fetchData: ${error}`)
+      }
+    }
   } else {
     total.value = null;
     yValue.value = null;
@@ -110,6 +111,7 @@ const fetchData = async () => {
 onMounted(async () => {
   await fetchData()
 })
+watch(() => store.state.isWeekData, fetchData, { immediate: true });
 </script>
 
 <style scoped>
