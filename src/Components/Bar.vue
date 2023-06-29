@@ -187,7 +187,7 @@ const day_data = async () => {
 const week_data = async () => {
   console.log('week data requested')
   try {
-    const res = await fetch('http://localhost:5200/data', {
+    const res = await fetch('http://localhost:5300/data', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

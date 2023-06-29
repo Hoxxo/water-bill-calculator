@@ -1,11 +1,11 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-const char* ssid = "ap-pc-8024d4";
-const char* password = "12345678";
+const char* ssid = "";
+const char* password = "";
 
 // The server's IP address and port number
-String serverName = "http://192.168.111.20:5200/data";
+String serverName = "http://192.168.111.21:5200/data";
 
 void setup() {
   Serial.begin(115200);
@@ -20,28 +20,30 @@ void setup() {
 }
 
 void loop() {
-//   HTTPClient http;
-//   http.begin(serverName);
-//   http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-//   String postData = "message=12345";
-//   int httpResponseCode = http.POST(postData);
-//
-//   if (httpResponseCode > 0) {
-//     Serial.print("HTTP Response code: ");
-//     Serial.println(httpResponseCode);
-//     String payload = http.getString();
-//     Serial.println(payload);
-//   } else {
-//     Serial.print("Error code: ");
-//     Serial.println(httpResponseCode);
-//   }
-//   http.end();
+  // HTTPClient http;
+  // http.begin(serverName);
+  // http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+  // String postData = "message=12345";
+  // int httpResponseCode = http.POST(postData);
+
+  // if (httpResponseCode > 0) {
+  //   Serial.print("HTTP Response code: ");
+  //   Serial.println(httpResponseCode);
+  //   String payload = http.getString();
+  //   Serial.println(payload);
+  // } else {
+  //   Serial.print("Error code: ");
+  //   Serial.println(httpResponseCode);
+  // }
+  // http.end();
 
   if (Serial.available()) {
     String payload = Serial.readStringUntil('\n');
 
     if (WiFi.status() == WL_CONNECTED) {
-    HTTPClient http;
+      HTTPClient http;
+      http.begin(serverName);
+      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
       String postData = "message=" + payload;
 

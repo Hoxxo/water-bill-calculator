@@ -2,10 +2,9 @@
 #include <HTTPClient.h>
 #include <esp_wpa2.h> // Include library for enterprise networks
 
-const char* ssid = "CIT-ap1x";
-const char* EAP_IDENTITY = "B2131126"; // This might be the same as your username
-const char* EAP_USERNAME = "B2131126"; // your enterprise network username
-const char* EAP_PASSWORD = ""; // your enterprise network password
+const char* ssid = "";
+const char* EAP_IDENTITY = ""; // This might be the same as your username
+const char* EAP_USERNAME = ""; // your enterprise network username
 
 // Server to send data
 String serverName = "http://10.96.212.68:5200/data";
