@@ -51,7 +51,7 @@ const isBarWrapper = (data: APIOperations | BarWrapper): data is BarWrapper => '
 
 const fetch_data = async (): Promise<APIOperations | BarWrapper | null> => {
   try {
-    const response = await fetch('http://localhost:5200/data', {
+    const response = await fetch('http://localhost:5300/data', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
