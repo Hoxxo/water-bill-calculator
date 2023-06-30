@@ -16,13 +16,13 @@ map.set(new Scope(41, 100), 358.50)
 map.set(new Scope(101, 500), 444.40)
 map.set(new Scope(501, Number.MAX_SAFE_INTEGER), 485.10)
 
-const find_entry = (input: number): [number, number] | null => {
+const find_entry = (input: number): [number, number, number] | null => {
   let index = 0
   for (const [scope, value] of map.entries()) {
-    ++index
     if (input >= scope.start && input <= scope.end) {
-      return [value, index]
+      return [value, index, scope.start]
     }
+    ++index
   }
 
   return null
@@ -40,21 +40,21 @@ const calculate = (n: number | null): number => {
   const index = find_entry(n)
 
   if (index === null) {
-    console.error('Error finding entry!', new Error().stack)
-    return 0
+    throw new Error(`Error finding index! Check the number provided: ${n}`)
   }
 
   let total = 0
   let _index = index[1]
+  const start_scope = index[2]
   for (const [_, value] of map.entries()) {
-    _index -= 1
     if (_index === 0) {
       break
     }
+    _index -= 1
     total += value * 10
   }
 
-  total += index[0] * (n - 10 * (index[1] - 1))
+  total += index[0] * (n - (start_scope - 1))
   return total
 }
 
