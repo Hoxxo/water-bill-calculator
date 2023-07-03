@@ -20,23 +20,6 @@ void setup() {
 }
 
 void loop() {
-  // HTTPClient http;
-  // http.begin(serverName);
-  // http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-  // String postData = "message=12345";
-  // int httpResponseCode = http.POST(postData);
-
-  // if (httpResponseCode > 0) {
-  //   Serial.print("HTTP Response code: ");
-  //   Serial.println(httpResponseCode);
-  //   String payload = http.getString();
-  //   Serial.println(payload);
-  // } else {
-  //   Serial.print("Error code: ");
-  //   Serial.println(httpResponseCode);
-  // }
-  // http.end();
-
   if (Serial.available()) {
     String payload = Serial.readStringUntil('\n');
 

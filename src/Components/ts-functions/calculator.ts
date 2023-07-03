@@ -6,6 +6,10 @@ class Scope {
     this.start = start
     this.end = end
   }
+
+  range(): number {
+    return this.end - this.start + 1
+  }
 }
 
 const map = new Map<Scope, number>()
@@ -16,11 +20,11 @@ map.set(new Scope(41, 100), 358.50)
 map.set(new Scope(101, 500), 444.40)
 map.set(new Scope(501, Number.MAX_SAFE_INTEGER), 485.10)
 
-const find_entry = (input: number): [number, number, number] | null => {
+const find_entry = (input: number): [number, number, Scope] | null => {
   let index = 0
   for (const [scope, value] of map.entries()) {
     if (input >= scope.start && input <= scope.end) {
-      return [value, index, scope.start]
+      return [value, index, scope]
     }
     ++index
   }
@@ -37,24 +41,25 @@ const calculate = (n: number | null): number => {
     return n * 62.70
   }
 
-  const index = find_entry(n)
+  const entry = find_entry(n)
 
-  if (index === null) {
-    throw new Error(`Error finding index! Check the number provided: ${n}`)
+  if (entry === null) {
+    throw new Error(`Error finding index! Check the argument provided: ${n}`)
   }
 
   let total = 0
-  let _index = index[1]
-  const start_scope = index[2]
-  for (const [_, value] of map.entries()) {
+  const [cost, counter, scope] = entry
+
+  let _index = counter  // This is a copy of the counter
+  for (const [currentScope, value] of map.entries()) {
     if (_index === 0) {
       break
     }
     _index -= 1
-    total += value * 10
+    total += value * currentScope.range()
   }
 
-  total += index[0] * (n - (start_scope - 1))
+  total += cost * (n - (scope.start - 1))
   return total
 }
 
