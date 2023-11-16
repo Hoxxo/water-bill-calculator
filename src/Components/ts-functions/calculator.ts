@@ -20,7 +20,7 @@ map.set(new Scope(41, 100), 358.50)
 map.set(new Scope(101, 500), 444.40)
 map.set(new Scope(501, Number.MAX_SAFE_INTEGER), 485.10)
 
-const find_entry = (input: number): [number, number, Scope] | null => {
+const find_entry = (input: number): [number, number, Scope] => {
   let index = 0
   for (const [scope, value] of map.entries()) {
     if (input >= scope.start && input <= scope.end) {
@@ -29,7 +29,7 @@ const find_entry = (input: number): [number, number, Scope] | null => {
     ++index
   }
 
-  return null
+  throw new Error(`Number not found in area entries! Check argument number: ${input}`)
 }
 
 const calculate = (n: number | null): number => {
@@ -43,19 +43,14 @@ const calculate = (n: number | null): number => {
 
   const entry = find_entry(n)
 
-  if (entry === null) {
-    throw new Error(`Error finding index! Check the argument provided: ${n}`)
-  }
-
   let total = 0
-  const [cost, counter, scope] = entry
+  let [cost, counter, scope] = entry
 
-  let _index = counter  // This is a copy of the counter
   for (const [currentScope, value] of map.entries()) {
-    if (_index === 0) {
+    if (counter === 0) {
       break
     }
-    _index -= 1
+    counter -= 1
     total += value * currentScope.range()
   }
 
